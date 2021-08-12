@@ -1,0 +1,241 @@
+Public Sub DisplayRecords()
+
+
+
+        Chart1.Series.Add("Coaching Categories")
+        Chart2.Series.Add("Root Cause Categories")
+
+       
+        Chart1.ChartAreas(0).RecalculateAxesScale()
+        Chart2.ChartAreas(0).RecalculateAxesScale()
+
+        Dim cond As String = ""
+
+        If (AccessAccount = "") Then
+            cond = ""
+        Else
+            cond = " and CoachedBy='" & AccessAccount & "' "
+        End If
+
+        Dim ConYear As String
+        Dim ConMonth As String
+        Dim Proj As String
+        Dim NameFil As String
+
+        If (txtName.Text <> "") Then
+            NameFil = " and name like '%" & txtName.Text.Replace("'", "''") & "%'  "
+        Else
+            NameFil = ""
+        End If
+
+        If (cboYear.SelectedIndex > 0) Then
+            ConYear = " and year(coachingdate) = '" & cboYear.SelectedItem & "' "
+        Else
+            ConYear = "  "
+        End If
+
+        If (cboMonth.SelectedIndex > 0) Then
+            ConMonth = " and upper(left(datename(month,CoachingDate),3)) = '" & cboMonth.SelectedItem & "' "
+        Else
+            ConMonth = "  "
+        End If
+
+        If (cboProject.SelectedIndex > 0) Then
+            Proj = " and department = '" & cboProject.SelectedItem & "' "
+        Else
+            Proj = "  "
+        End If
+
+
+
+
+
+        Call ConnectTOSQLServer()
+
+        If (AccessAccount = "") Then
+
+            strSQL = "select CoachingCategory,count(*) as Total " &
+                        " from tblCoachingMaster2 " &
+                    " where 1 = 1  and status='ACTIVE'  " & NameFil & "  " & ConYear & "   " & ConMonth & "   " & Proj & " " &
+                  "  group by CoachingCategory "
+
+        Else
+            strSQL = "select CoachingCategory,count(*) as Total " &
+                   " from ( " &
+                    " 	select a.*	 " &
+                       " 	from tblCoachingMaster2 a	 " &
+                       " 	inner join tblVKPOEmployee_HRNames b on a.Name=b.firstname+' '+lastname	 " &
+                       " 	where status='active'	 " &
+                       " 	and EmployeeStatus='active'	 " &
+                       " 	and name in(	 " &
+                       " 	select firstname+' '+lastname as name	 " &
+                       " 	from tblVKPOEmployee_HRNames	 " &
+                       " 	where EmployeeStatus='active'	 " &
+                       " 	and Department in (	 " &
+                       " 	select campaign	 " &
+                       " 	from (	 " &
+                       " 	select distinct campaign	 " &
+                       " 	from tblVKPOEmployee_HRNames	 " &
+                       " 	where EmployeeStatus='active'	 " &
+                       " 	and department in(	 " &
+                       " 	select distinct department	 " &
+                       " 	from tblVKPOEmployee_HRNames	 " &
+                       " 	where EmployeeStatus='active'	 " &
+                       " 	and Supervisor='" & NameLastForm & "')	 " &
+                       " 	union 	 " &
+                       " 	select distinct department	 " &
+                       " 	from tblVKPOEmployee_HRNames	 " &
+                       " 	where EmployeeStatus='active'	 " &
+                       " 	and Supervisor='" & NameLastForm & "'	 " &
+                       " 	)a ))	 " &
+                       " 	and b.CRank<	 " &
+                       " 	(select crank 	 " &
+                       " 	from tblVKPOEmployee_HRNames 	 " &
+                       " 	where EmployeeStatus='active' 	 " &
+                       " 	and firstname+' '+LASTNAME='" & AccessAccount & "')	 " &
+                       " 	and (replace(replace(replace(b.role,' - OIT',''),' - OIC',''),'OPS','Team Leader') not in	 " &
+                       " 	(select distinct replace(replace(replace(b.role,' - OIT',''),' - OIC',''),'OPS','Team Leader') 	 " &
+                       " 	from tblVKPOEmployee_HRNames 	 " &
+                       " 	where EmployeeStatus='active' 	 " &
+                       " 	and firstname+''+LASTNAME='" & AccessAccount & "')	 " &
+                       " 	)	 " &
+                       " 	union 	 " &
+                       " 	select *	 " &
+                       " 	from tblCoachingMaster2	 " &
+                       " 	where CoachedBy='" & AccessAccount & "'		and status='Active'  " &
+                       " 	)a	 " &
+               " where 1 = 1  " & NameFil & "  " & ConYear & "   " & ConMonth & "   " & Proj & " " &
+             "  group by CoachingCategory "
+
+        End If
+
+        Console.WriteLine("1:  " & strSQL)
+        cmd = New SqlCommand(strSQL, Connection)
+        reader = cmd.ExecuteReader()
+        Dim cnt = 0
+        Dim rng As New Random
+        Chart1.Series("Coaching Categories").ResetIsValueShownAsLabel()
+        Chart1.Series("Coaching Categories").ResetIsVisibleInLegend()
+        Dim thisPoint As DataVisualization.Charting.DataPoint
+        Dim g = 0
+
+
+        Do While reader.HasRows
+
+            Do While reader.Read()
+
+                Chart1.Series("Coaching Categories").Points.AddXY(reader.GetString(0), reader.GetInt32(1))
+
+                thisPoint = Chart1.Series(0).Points(g)
+                If (g = 0) Then
+                    thisPoint.Color = Color.Yellow
+                ElseIf (g = 1) Then
+                    thisPoint.Color = Color.Orange
+                ElseIf (g = 2) Then
+                    thisPoint.Color = Color.OrangeRed
+                ElseIf (g = 3) Then
+                    thisPoint.Color = Color.SteelBlue
+                End If
+                g = g + 1
+
+            Loop
+            reader.NextResult()
+        Loop
+        reader.Close()
+        Chart1.Series("Coaching Categories").IsValueShownAsLabel = True
+        Chart1.Series("Coaching Categories").IsVisibleInLegend = False
+
+
+
+
+        If (AccessAccount = "") Then
+            strSQL = "select RootCauseCategory,count(*) as Total " &
+                        " from tblCoachingMaster2 " &
+                    " where 1 = 1 and status='ACTIVE' " & cond & "  " & NameFil & "  " & ConYear & "   " & ConMonth & "   " & Proj & " " &
+                  "  group by RootCauseCategory "
+
+        Else
+
+            strSQL = "select RootCauseCategory,count(*) as Total " &
+                       " from ( " &
+                        " 	select a.*	 " &
+                       " 	from tblCoachingMaster2 a	 " &
+                       " 	inner join tblVKPOEmployee_HRNames b on a.Name=b.firstname+' '+lastname	 " &
+                       " 	where status='active'	 " &
+                       " 	and EmployeeStatus='active'	 " &
+                       " 	and name in(	 " &
+                       " 	select firstname+' '+lastname as name	 " &
+                       " 	from tblVKPOEmployee_HRNames	 " &
+                       " 	where EmployeeStatus='active'	 " &
+                       " 	and Department in (	 " &
+                       " 	select campaign	 " &
+                       " 	from (	 " &
+                       " 	select distinct campaign	 " &
+                       " 	from tblVKPOEmployee_HRNames	 " &
+                       " 	where EmployeeStatus='active'	 " &
+                       " 	and department in(	 " &
+                       " 	select distinct department	 " &
+                       " 	from tblVKPOEmployee_HRNames	 " &
+                       " 	where EmployeeStatus='active'	 " &
+                       " 	and Supervisor='" & NameLastForm & "')	 " &
+                       " 	union 	 " &
+                       " 	select distinct department	 " &
+                       " 	from tblVKPOEmployee_HRNames	 " &
+                       " 	where EmployeeStatus='active'	 " &
+                       " 	and Supervisor='" & NameLastForm & "'	 " &
+                       " 	)a ))	 " &
+                       " 	and b.CRank<	 " &
+                       " 	(select crank 	 " &
+                       " 	from tblVKPOEmployee_HRNames 	 " &
+                       " 	where EmployeeStatus='active' 	 " &
+                       " 	and firstname+' '+LASTNAME='" & AccessAccount & "')	 " &
+                       " 	and (replace(replace(replace(b.role,' - OIT',''),' - OIC',''),'OPS','Team Leader') not in	 " &
+                       " 	(select distinct replace(replace(replace(b.role,' - OIT',''),' - OIC',''),'OPS','Team Leader') 	 " &
+                       " 	from tblVKPOEmployee_HRNames 	 " &
+                       " 	where EmployeeStatus='active' 	 " &
+                       " 	and firstname+''+LASTNAME='" & AccessAccount & "')	 " &
+                       " 	)	 " &
+                       " 	union 	 " &
+                       " 	select *	 " &
+                       " 	from tblCoachingMaster2	 " &
+                       " 	where CoachedBy='" & AccessAccount & "'		and status='Active'  " &
+                       " 	)a	 " &
+                   " where 1 = 1   " & NameFil & "  " & ConYear & "   " & ConMonth & "   " & Proj & " " &
+                 "  group by RootCauseCategory "
+
+        End If
+
+        Console.WriteLine("2:  " & strSQL)
+
+        cmd = New SqlCommand(strSQL, Connection)
+        reader = cmd.ExecuteReader()
+
+        g = 0
+        Do While reader.HasRows
+
+            Do While reader.Read()
+
+                Chart2.Series("Root Cause Categories").Points.AddXY(reader.GetString(0), reader.GetInt32(1))
+                thisPoint = Chart2.Series(0).Points(g)
+                If (g = 0) Then
+                    thisPoint.Color = Color.CadetBlue
+                ElseIf (g = 1) Then
+                    thisPoint.Color = Color.Green
+                ElseIf (g = 2) Then
+                    thisPoint.Color = Color.YellowGreen
+                End If
+                g = g + 1
+
+            Loop
+            reader.NextResult()
+        Loop
+        g = 0
+
+        reader.Close()
+        Chart2.Series("Root Cause Categories").IsValueShownAsLabel = True
+        Chart2.Series("Root Cause Categories").IsVisibleInLegend = False
+
+
+
+        Call DisConnectSQLServer()
+    End Sub
