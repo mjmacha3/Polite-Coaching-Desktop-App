@@ -91,7 +91,7 @@ Public Class frmAdd
         Do While reader.HasRows
 
             Do While reader.Read()
-               cboSupervisor.Items.Add(reader.GetString(0))
+                cboSupervisor.Items.Add(reader.GetString(0))
             Loop
             reader.NextResult()
         Loop
@@ -399,7 +399,7 @@ Public Class frmAdd
             cboDesignation.SelectedItem = cboDesg2.SelectedItem
         End If
 
-      
+
     End Sub
 
 
@@ -504,6 +504,10 @@ Public Class frmAdd
     End Sub
 
     Private Sub cboSupervisor_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboSupervisor.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub MenuStrip1_ItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles MenuStrip1.ItemClicked
 
     End Sub
 

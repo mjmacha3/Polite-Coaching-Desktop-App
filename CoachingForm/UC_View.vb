@@ -947,7 +947,10 @@ Public Class UC_View
     End Sub
 
     Private Sub txtName_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtName.KeyPress
-        DisplayRecords()
+        If e.KeyChar = Microsoft.VisualBasic.ChrW(Keys.Enter) Then
+
+            DisplayRecords()
+        End If
     End Sub
 
     Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick

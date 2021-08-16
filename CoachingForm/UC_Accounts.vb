@@ -25,21 +25,21 @@ Public Class UC_Accounts
 
 
             Dim firstname As String = dgvAccounts.CurrentRow.Cells(1).Value
-                Dim lname1 As String = dgvAccounts.CurrentRow.Cells(2).Value
-                Dim lname As String = lname1.Replace(lname1.Substring(0, 1), "")
-                Dim username As String = firstname.Substring(0, 1).ToUpper + lname1.Substring(0, 1).ToUpper + lname.Trim
+            Dim lname1 As String = dgvAccounts.CurrentRow.Cells(2).Value
+            Dim lname As String = lname1.Replace(lname1.Substring(0, 1), "")
+            Dim username As String = firstname.Substring(0, 1).ToUpper + lname1.Substring(0, 1).ToUpper + lname.Trim
 
-                Call ConnectTOSQLServer()
-                strSQL = "INSERT INTO tblCoachingLogin([EMPLOYEE ID NUMBER],Username, pword,hash_pass, Password,access) VALUES ('" & Me.txtEmployeeid.Text & "','" & username & "','admin12345','41E5653FC7AEB894026D6BB7B2DB7F65902B454945FA8FD65A6327047B5277FB','41E5653FC7AEB894026D6BB7B2DB7F65902B454945FA8FD65A6327047B5277FB','" & Me.cbxAccesstype.Text & "')"
-                cmd = New SqlCommand(strSQL, Connection)
-                Console.WriteLine(strSQL)
-                cmd.ExecuteNonQuery()
-                MsgBox("Records saved" & vbNewLine & "eid: " & Me.txtEmployeeid.Text & vbNewLine & "pass: admin12345", vbInformation, Application.ProductName)
-                Call DisConnectSQLServer()
-                Me.ViewRecords()
-                cond = 0
+            Call ConnectTOSQLServer()
+            strSQL = "INSERT INTO tblCoachingLogin([EMPLOYEE ID NUMBER],Username, pword,hash_pass, Password,access) VALUES ('" & Me.txtEmployeeid.Text & "','" & username & "','admin12345','41E5653FC7AEB894026D6BB7B2DB7F65902B454945FA8FD65A6327047B5277FB','41E5653FC7AEB894026D6BB7B2DB7F65902B454945FA8FD65A6327047B5277FB','" & Me.cbxAccesstype.Text & "')"
+            cmd = New SqlCommand(strSQL, Connection)
+            Console.WriteLine(strSQL)
+            cmd.ExecuteNonQuery()
+            MsgBox("Records saved" & vbNewLine & "eid: " & Me.txtEmployeeid.Text & vbNewLine & "pass: admin12345", vbInformation, Application.ProductName)
+            Call DisConnectSQLServer()
+            Me.ViewRecords()
+            cond = 0
 
-            End If
+        End If
 
     End Sub
 
