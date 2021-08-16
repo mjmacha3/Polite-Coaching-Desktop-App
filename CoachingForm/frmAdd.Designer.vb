@@ -170,7 +170,7 @@ Partial Class frmAdd
         Me.cboRootCauseCat.Font = New System.Drawing.Font("Calibri", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cboRootCauseCat.FormattingEnabled = True
         Me.cboRootCauseCat.Items.AddRange(New Object() {"People", "Process", "Technology"})
-        Me.cboRootCauseCat.Location = New System.Drawing.Point(728, 146)
+        Me.cboRootCauseCat.Location = New System.Drawing.Point(729, 181)
         Me.cboRootCauseCat.Name = "cboRootCauseCat"
         Me.cboRootCauseCat.Size = New System.Drawing.Size(231, 23)
         Me.cboRootCauseCat.Sorted = True
@@ -206,7 +206,7 @@ Partial Class frmAdd
         Me.Label7.BackColor = System.Drawing.Color.Transparent
         Me.Label7.Font = New System.Drawing.Font("Calibri", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Label7.Location = New System.Drawing.Point(583, 149)
+        Me.Label7.Location = New System.Drawing.Point(588, 181)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(139, 15)
         Me.Label7.TabIndex = 7
@@ -912,7 +912,7 @@ Partial Class frmAdd
         Me.cboSubCategory.Font = New System.Drawing.Font("Calibri", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cboSubCategory.FormattingEnabled = True
         Me.cboSubCategory.Items.AddRange(New Object() {"People", "Process", "Technology"})
-        Me.cboSubCategory.Location = New System.Drawing.Point(748, 173)
+        Me.cboSubCategory.Location = New System.Drawing.Point(747, 149)
         Me.cboSubCategory.Name = "cboSubCategory"
         Me.cboSubCategory.Size = New System.Drawing.Size(212, 23)
         Me.cboSubCategory.Sorted = True
@@ -924,7 +924,7 @@ Partial Class frmAdd
         Me.Label28.BackColor = System.Drawing.Color.Transparent
         Me.Label28.Font = New System.Drawing.Font("Calibri", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label28.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Label28.Location = New System.Drawing.Point(589, 181)
+        Me.Label28.Location = New System.Drawing.Point(588, 157)
         Me.Label28.Name = "Label28"
         Me.Label28.Size = New System.Drawing.Size(153, 15)
         Me.Label28.TabIndex = 99
