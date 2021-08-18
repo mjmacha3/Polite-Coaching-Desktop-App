@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmLogin
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class frmLogin
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmLogin))
         Me.btnCancel = New System.Windows.Forms.Button()
@@ -30,6 +30,7 @@ Partial Class frmLogin
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.txtUname = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.Guna2Button1 = New Guna.UI2.WinForms.Guna2Button()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -110,6 +111,23 @@ Partial Class frmLogin
         Me.Label1.TabIndex = 7
         Me.Label1.Text = "Username:"
         '
+        'Guna2Button1
+        '
+        Me.Guna2Button1.CheckedState.Parent = Me.Guna2Button1
+        Me.Guna2Button1.CustomImages.HoveredImage = CType(resources.GetObject("Guna2Button1.CustomImages.HoveredImage"), System.Drawing.Image)
+        Me.Guna2Button1.CustomImages.Image = CType(resources.GetObject("Guna2Button1.CustomImages.Image"), System.Drawing.Image)
+        Me.Guna2Button1.CustomImages.ImageOffset = New System.Drawing.Point(-10, 0)
+        Me.Guna2Button1.CustomImages.ImageSize = New System.Drawing.Size(150, 50)
+        Me.Guna2Button1.CustomImages.Parent = Me.Guna2Button1
+        Me.Guna2Button1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Guna2Button1.ForeColor = System.Drawing.Color.White
+        Me.Guna2Button1.HoverState.Parent = Me.Guna2Button1
+        Me.Guna2Button1.Location = New System.Drawing.Point(135, 316)
+        Me.Guna2Button1.Name = "Guna2Button1"
+        Me.Guna2Button1.ShadowDecoration.Parent = Me.Guna2Button1
+        Me.Guna2Button1.Size = New System.Drawing.Size(143, 42)
+        Me.Guna2Button1.TabIndex = 26
+        '
         'frmLogin
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -117,6 +135,7 @@ Partial Class frmLogin
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImage = Global.CoachingForm.My.Resources.Resources.abstract_low_poly_design_background_1048_8196
         Me.ClientSize = New System.Drawing.Size(565, 400)
+        Me.Controls.Add(Me.Guna2Button1)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.txtUname)
         Me.Controls.Add(Me.txtPass)
@@ -142,4 +161,5 @@ Partial Class frmLogin
     Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
     Friend WithEvents txtUname As System.Windows.Forms.TextBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents Guna2Button1 As Guna.UI2.WinForms.Guna2Button
 End Class
